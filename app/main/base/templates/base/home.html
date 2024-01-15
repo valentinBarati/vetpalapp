@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item active">Animal list</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-lg-8">
+        {% include "animals/components/animals_list.html" %}
+      </div>
+      <div class="col-lg-4">
+        {% include "base/components/recent_activity.html" %}
+        {% include "base/components/owners_list.html" %}
+      </div>
+    </div>
+  </section>
+{% endblock content %}

@@ -1,0 +1,95 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="pagetitle">
+      <h1>Profile</h1>
+    </div>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-3">
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <div class="card-body pt-2 d-flex flex-column align-items-center rounded text-center shadow-sm">
+              <div class="blank-profile-photo mt-2 mb-2 rounded">
+                <i class="fa-solid fa-user-doctor"></i>
+              </div>
+            </div>
+            <h2>{{ profile }}</h2>
+            <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
+          </div>
+        </div>
+        {% include "base/components/recent_activity.html" %}
+      </div>
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-body pt-3">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about">About</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#patients">Patients</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#clients">Clients</button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active profile-overview" id="about">
+                <h5 class="card-title">Profile Details</h5>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.first_name }} {{ profile.last_name }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">E-mail address</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.email }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Staff</div>
+                  <div class="col-lg-9 col-md-8">
+                    <input type="checkbox"
+                           class="checkbox"
+                           onclick="return(false)"
+                           {% if profile.is_staff is True %}checked{% endif %}>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Veterinarian</div>
+                  <div class="col-lg-9 col-md-8">
+                    <input type="checkbox"
+                           class="checkbox"
+                           onclick="return(false)"
+                           {% if profile.is_veterinarian is True %}checked{% endif %}>
+                  </div>
+                </div>
+                {% if request.user.is_superuser %}
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Super user</div>
+                    <div class="col-lg-9 col-md-8">
+                      <input type="checkbox"
+                             class="checkbox"
+                             onclick="return(false)"
+                             {% if profile.is_superuser is True %}checked{% endif %}>
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Last login</div>
+                  <div class="col-lg-9 col-md-8">
+                    {{ profile.last_login|timesince }} <small class="text-muted">({{ profile.last_login|date:"Y-m-d H:i" }})</small>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade profile-edit pt-3" id="patients">
+                <div>{% include "animals/components/animals_list.html" %}</div>
+              </div>
+              <div class="tab-pane fade profile-edit pt-3" id="clients">{% include "base/components/owners_list.html" %}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

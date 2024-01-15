@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="container-sm col-5">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header py-3 mb-3">
+          <h5 class="m-0 font-weight-bold">Delete confirmation</h5>
+        </div>
+        <h2>{{ obj }}</h2>
+        <p>Are you sure you want to delete?</p>
+      </div>
+      <div class="card-footer text-center d-flex justify-content-around">
+        <a href="{{ request.META.HTTP_REFERER }}">
+          <button type="button" class="btn btn-primary">No and go back to previous page</button>
+        </a>
+        <form method="post" action="">
+          <button type="submit" class="btn btn-danger">Yes I'd like to remove this entry</button>
+          {% csrf_token %}
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

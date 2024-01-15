@@ -1,0 +1,44 @@
+{% load bootstrap5 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content="Your meta description goes here" />
+    <meta name="keywords" content="your, meta, keywords, go, here" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+          rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}"
+          rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}"
+          rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <title>VetPalApp</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+      <main id="main" class="main">
+        {% include "header.html" %}
+        {% include "sidebar.html" %}
+        {% include "messages.html" %}
+        {% block content %}
+        {% endblock content %}
+      </main>
+    {% else %}
+      {% include "messages.html" %}
+      {% block login_register %}
+      {% endblock login_register %}
+    {% endif %}
+  </body>
+  {% if user.is_authenticated %}
+    {% include "footer.html" %}
+  {% endif %}
+</html>

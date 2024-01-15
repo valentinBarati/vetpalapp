@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% load bootstrap5 %}
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <div class="card-header py-3 mb-3">
+        <h5 class="m-0 font-weight-bold">{{ title }}</h5>
+      </div>
+      <form method="{% if method|lower == 'post' %}post{% else %}get{% endif %}"
+            action="{% if action is not Null %}{{ action }}{% endif %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-primary">Back</a>
+    </div>
+  </div>
+{% endblock content %}

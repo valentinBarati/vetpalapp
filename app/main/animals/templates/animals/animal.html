@@ -1,0 +1,149 @@
+{% extends "main.html" %}
+{% block content %}
+    {% load bootstrap5 %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl">
+                <div class="col-auto">
+                    <div class="card shadow">
+                        <div class="card-body row">
+                            <div class="card-header py-3 mb-3">
+                                <h5 class=" font-weight-bold">Animal datasheet</h5>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="card">
+                                    <div class="card-body pt-2 d-flex flex-column align-items-center rounded text-center shadow-sm">
+                                        <div class="blank-profile-photo mt-2 mb-2 rounded light-bg">
+                                            <i class="fa-solid fa-dog"></i>
+                                            <br>
+                                        </div>
+                                        <h5 class="text-center">{{ animal.name|truncatewords:2 }}</h5>
+                                        <h6 class="text-center text-muted">{{ animal.animal_type }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="tab-content pt-2">
+                                    <div class="tab-pane fade show active profile-overview"
+                                         id="profile-overview">
+                                        <h5 class="card-title">About</h5>
+                                        <p class="small fst-italic">{{ animal.description }}</p>
+                                        <h5 class="card-title">Details</h5>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Veterinarian</div>
+                                            <div class="col-lg-9 col-md-8">
+                                                <a href="{% url 'user-profile' animal.created_by.id %}"
+                                                   title="Jump to {{ animal.created_by.first_name }} profile">{{ animal.created_by.first_name }} {{ animal.created_by.last_name }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row">&nbsp;</div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                            <div class="col-lg-9 col-md-8">{{ animal.name }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Owner name</div>
+                                            <div class="col-lg-9 col-md-8">
+                                                <a href="{% url 'owners:profile' animal.owner.id %}"
+                                                   title="Jump to {{ animal.owner }} profile">{{ animal.owner }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Birth Date</div>
+                                            <div class="col-lg-9 col-md-8">{{ animal.birth_date|date:"d-m-Y" }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Weight</div>
+                                            <div class="col-lg-9 col-md-8">
+                                                {{ animal.weight_kg }} <small>kg</small>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Birth Date</div>
+                                            <div class="col-lg-9 col-md-8">
+                                                {{ animal.height_cm }} <small>cm</small>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Neutered</div>
+                                            <div class="col-lg-9 col-md-8">
+                                                <input type="checkbox"
+                                                       class="checkbox"
+                                                       onclick="return(false)"
+                                                       {% if animal.is_neutered is True %}checked{% endif %}>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Notes</div>
+                                            <div class="col-lg-9 col-md-8">{{ animal.notes }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row align-right">
+                                {% if request.user.is_veterinarian %}
+                                    <div class="col-auto">
+                                        <a href="{% url 'reports:summary' animal.id %}"
+                                           download
+                                           class="btn btn-secondary btn-sm"><i class="fa-solid fa-clipboard-list"></i> Download summary</a>
+                                    </div>
+                                {% endif %}
+                                {% if perms.animals.change_animal %}
+                                    <div class="col-auto">
+                                        <a href="{% url 'animals:update' animal.id %}"
+                                           class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>
+                                    </div>
+                                {% endif %}
+                                {% if perms.animals.delete_animal %}
+                                    <div class="col-auto">
+                                        <a href="{% url 'animals:delete' animal.id %}"
+                                           class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">{% include "samples/components/samples_list.html" with animal=animal %}</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header py-3 mb-3">
+                            <h5 class="m-0 font-weight-bold">Operators</h5>
+                        </div>
+                        <ul class="list-group">
+                            {% for operator in operators %}
+                                <a href="{% url 'user-profile' operator.id %}"
+                                   title="Jump to {{ operator }} profile">
+                                    <li class="list-group-item {% if request.user == operator %}active{% endif %}">{{ operator }}</li>
+                                </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% if perms.samples.add_sample %}
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="card-header py-3 mb-3">
+                                <h5 class="m-0 font-weight-bold">Add new sapmle</h5>
+                            </div>
+                            <form method="post" action="{% url 'samples:create' %}">
+                                {% csrf_token %}
+                                {% bootstrap_form sample_form %}
+                                <div class="row mb-3">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Submit Form</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

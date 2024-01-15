@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title card-header mb-2">Recent active owners</h5>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for owner in owners %}
+          <tr>
+            <th scope="row">#{{ owner.id }}</th>
+            <td>
+              <a href="{% url 'owners:profile' owner.id %}?q={{ owner.name }}">{{ owner.name }}</a>
+            </td>
+            <td>{{ owner.phone_number }}</td>
+            <td>{{ owner.email }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

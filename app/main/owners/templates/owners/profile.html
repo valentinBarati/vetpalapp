@@ -1,0 +1,70 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="pagetitle">
+      <h1>Owner Profile</h1>
+    </div>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-3">
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <i class="fa-solid fa-user-doctor"></i>
+            <h2>{{ owner }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-body pt-3">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about">About</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pets">Pets</button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active profile-overview" id="about">
+                <h5 class="card-title">Profile Details</h5>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Address</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.address }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Phone number</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.phone_number }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">E-mail address</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.email }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Emergency cpntant</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.emergency_contact_name }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Emergency phone</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.emergency_contact_phone }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Created</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.created|date:"Y-m-d" }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Notes</div>
+                  <div class="col-lg-9 col-md-8">{{ owner.notes }}</div>
+                </div>
+              </div>
+              <div class="tab-pane fade profile-edit pt-3" id="pets">
+                <div>{% include "animals/components/animals_list.html" %}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

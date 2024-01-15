@@ -1,0 +1,36 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'home' %}">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+    </li>
+    <li class="nav-heading">Operations</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'samples:create' %}">
+        <i class="fa-solid fa-plus"></i><i class="fa-solid fa-vial"></i>
+        <span>Add new sample</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'animals:create' %}">
+        <i class="fa-solid fa-plus"></i><i class="fa-solid fa-dog"></i>
+        <span>Add new animal</span>
+      </a>
+    </li>
+    <li class="nav-heading">Pages</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'animals:home' %}">
+        <i class="fa-solid fa-dog"></i>
+        <span>Animals list</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'samples:home' %}">
+        <i class="fa-solid fa-vial"></i>
+        <span>Samples list</span>
+      </a>
+    </li>
+  </ul>
+</aside>

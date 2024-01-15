@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow overflow-auto">
+      <div class="card-body">
+        <div class="card-header py-3 mb-3">
+          <h5 class="m-0 font-weight-bold">Animals list</h5>
+        </div>
+        <table class="table table-bordered table-striped">
+          <thead class="text-center bg-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Birth date</th>
+              <th scope="col">Description</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in animals %}
+              <tr>
+                <th scope="row">#{{ a.id }}</th>
+                <td>
+                  <a href="{% url 'animals:animal' a.id %}">{{ a.name|truncatewords:2 }}</a>
+                </td>
+                <td>{{ a.animal_type }}</td>
+                <td>{{ a.birth_date|date:"Y" }}</td>
+                <td>{{ a.description|truncatewords:30 }}</td>
+                <td>
+                  <div class="nowrap">
+                    {% if perms.animals.change_animal %}
+                      <a href="{% url 'animals:update' a.id %}" class="m-1">
+                        <i class="fa-solid fa-pen-to-square text-secondary"></i>
+                      </a>
+                    {% endif %}
+                    {% if perms.animals.delete_animal %}
+                      <a href="{% url 'animals:delete' a.id %}">
+                        <i class="fa-solid fa-trash-can text-danger"></i>
+                      </a>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
